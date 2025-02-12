@@ -337,11 +337,11 @@ def new_load_training_config(config_path: str) -> NewMusicLMTrainingConfig:
 
 # helper functions
 
-def load_model(model, path):
+def load_model(model, path, device = None):
     """helper class to load a model checkpoint"""
     path = Path(path)
     assert path.exists(), f'checkpoint does not exist at {str(path)}'
-    pkg = torch.load(str(path))
+    pkg = torch.load(str(path), map_location=device)
     model.load_state_dict(pkg)
 
 class disable_print:
@@ -394,7 +394,7 @@ def create_semantic_transformer_from_config(
     ).to(device)
 
     if exists(checkpoint_path):
-        load_model(transformer, checkpoint_path)
+        load_model(transformer, checkpoint_path, device)
 
     return transformer
 
@@ -416,7 +416,7 @@ def create_coarse_transformer_from_config(
     ).to(device)
 
     if exists(checkpoint_path):
-        load_model(transformer, checkpoint_path)
+        load_model(transformer, checkpoint_path, device)
 
     return transformer
 
@@ -438,7 +438,7 @@ def create_fine_transformer_from_config(
     ).to(device)
 
     if exists(checkpoint_path):
-        load_model(transformer, checkpoint_path)
+        load_model(transformer, checkpoint_path, device)
 
     return transformer
 
@@ -459,7 +459,7 @@ def create_semcoarsetosem_transformer_from_config(
     ).to(device)
 
     if exists(checkpoint_path):
-        load_model(transformer, checkpoint_path)
+        load_model(transformer, checkpoint_path, device)
 
     return transformer
 
@@ -480,7 +480,7 @@ def create_instcoarse_transformer_from_config(
     ).to(device)
 
     if exists(checkpoint_path):
-        load_model(transformer, checkpoint_path)
+        load_model(transformer, checkpoint_path, device)
 
     return transformer
 
